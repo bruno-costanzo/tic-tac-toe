@@ -43,7 +43,7 @@ class Game
   end
 
   def playing_game
-    10.times do
+    until winner?
       @current_player = turn_of(@current_player)
       puts display_turn_msg(@current_player)
       @board.values[movement_by_player] = @current_player.symbol
@@ -51,7 +51,7 @@ class Game
   end
 
   def winner?
-
+    check_board
   end
 
   def turn_of(player)
@@ -67,5 +67,21 @@ class Game
     number = nil
     number = gets.chomp.to_i until @board.values.index(number)
     number - 1
+  end
+
+  def check_board
+    winner = check
+    puts winner
+    winner
+  end
+
+  # El problema principal ahora es que checkers pone sus valores en el momento de la asignación.
+  def check
+    winner = false
+    @board.checkers_idx.each do |idxs|
+      winner = true if @board.values[idxs[0]].to_s + @board.values[idxs[1]].to_s + @board.values[idxs[2]].to_s == "OOO" || @board.values[idxs[0]].to_s + @board.values[idxs[1]].to_s + @board.values[idxs[2]].to_s == "XXX"
+    end
+    puts @board.board_show if winner == true
+    winner
   end
 end
