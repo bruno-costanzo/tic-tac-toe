@@ -13,4 +13,8 @@ module Display
   def display_well_created_player(player_name)
     "#{player_name} is ready to play!"
   end
+
+  def display_turn_msg(player)
+    "It's #{player.name} turn! Pick a place"
+  end
 end

@@ -12,11 +12,12 @@ class Game
     @board = nil
     @player_one = nil
     @player_two = nil
+    @current_player = nil
   end
 
   def play
     set_up_game
-    game_started
+    game_starter
   end
 
   private
@@ -35,8 +36,36 @@ class Game
     puts display_well_created_player(player.name)
   end
 
-  def game_started
+  def game_starter
     @board = Board.new
     puts @board.board_show
+    playing_game
+  end
+
+  def playing_game
+    10.times do
+      @current_player = turn_of(@current_player)
+      puts display_turn_msg(@current_player)
+      @board.values[movement_by_player] = @current_player.symbol
+    end
+  end
+
+  def winner?
+
+  end
+
+  def turn_of(player)
+    player == @player_one ? @player_two : @player_one
+  end
+
+  def movement_by_player
+    puts @board.board_show
+    number_picker
+  end
+
+  def number_picker
+    number = nil
+    number = gets.chomp.to_i until @board.values.index(number)
+    number - 1
   end
 end
