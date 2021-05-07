@@ -16,5 +16,13 @@ end
 #   puts 'Would you like to play again?'
 #   response = gets.chomp.downcase
 # end
-
-play_game
+play = true
+while play
+  play_game
+  puts 'Do you want to play again? Y/N'
+  letter = gets.chomp
+  if 'Nn'.include?(letter)
+    puts 'See you later!'
+    play = false
+  end
+end

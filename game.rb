@@ -43,11 +43,12 @@ class Game
   end
 
   def playing_game
-    until winner?
+    until winner? || tie_game
       @current_player = turn_of(@current_player)
       puts display_turn_msg(@current_player)
       @board.values[movement_by_player] = @current_player.symbol
     end
+    puts tie_game ? "It's a tie!" : "The winner is #{@current_player.name}!!!"
   end
 
   def winner?
@@ -70,9 +71,7 @@ class Game
   end
 
   def check_board
-    winner = check
-    puts winner
-    winner
+    check
   end
 
   # El problema principal ahora es que checkers pone sus valores en el momento de la asignación.
@@ -83,5 +82,12 @@ class Game
     end
     puts @board.board_show if winner == true
     winner
+  end
+
+  def tie_game
+    not_tie = (1..9).any? do |number|
+      @board.values.index(number)
+    end
+    !not_tie
   end
 end
